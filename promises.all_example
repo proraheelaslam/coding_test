@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script>
+		
+
+		let urls = [
+				  'https://api.github.com/users/iliakan',
+				  'https://api.github.com/users/remy',
+				  'https://api.github.com/users/jeresig',
+				  'https://api.github.com/users/iliakan',
+				  'https://api.github.com/users/remy',
+				  'https://api.github.com/users/jean',
+				  'https://api.github.com/users/denail',
+				  'https://api.github.com/users/moon',
+				  'https://api.github.com/users/dev',
+				  'https://api.github.com/users/mout',
+				  'https://api.github.com/users/non',
+				  'https://api.github.com/users/.',
+				  'https://api.github.com/users/.',
+				  'https://api.github.com/users/df'
+				];
+
+    let apis_url_arr = urls;
+     let dep_fields_arr = [];
+    for (var i = 0; i < 14; i++) {
+        let obj = {};
+        obj.column_id = i;
+        obj.row_id = i;
+        dep_fields_arr.push(obj);
+    }
+   
+
+    //console.log(apis_url_arr);
+    
+	loadSequenceAPIs(urls);			
+
+    function loadSequenceAPIs(urls){
+           
+		let requests = urls.map(url => fetch(url));
+        Promise.all(requests).then((responses) => {
+        	return responses;
+        }).then(responses => {
+        	Promise.all(responses.map(r => r.json())).then((result) => {
+        		/*console.log(result);
+        		console.log(dep_fields_arr);*/
+        		setResValues(result,dep_fields_arr);
+        		
+        	});
+        });
+    }	
+
+    function setResValues(result,dep_fields_arr){
+
+    		if(dep_fields_arr.length > 0){
+    			for (var i = 0; i < dep_fields_arr.length; i++) {
+    				let single = dep_fields_arr[i];
+    				let api_obj = result[i];
+    				console.log("single", single);
+    				console.log("api_obj", api_obj);
+    			}
+    		}
+    }				 
+        
+	</script>
+
+</body>
+</html>
